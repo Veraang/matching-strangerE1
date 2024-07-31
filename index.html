@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>匹配同伴</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #loading {
+        font-size: 24px;
+        margin-top: 20px;
+        display: none;
+    }
+    #result {
+        font-size: 24px;
+        margin-top: 20px;
+        display: none;
+    }
+</style>
+</head>
+<body>
+<h1>请输入姓名：</h1>
+<input type="text" id="inputName">
+<button id="matchButton" onclick="matchName()">开始匹配</button>
+<div id="loading">正在匹配……</div>
+<div id="result"></div>
+
+<script>
+let hasMatched = false;
+
+function getRandomResult(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function showResult(result) {
+    var loadingDiv = document.getElementById('loading');
+    var resultDiv = document.getElementById('result');
+    loadingDiv.style.display = 'none';
+    resultDiv.style.display = 'block';
+    resultDiv.textContent = result;
+}
+
+function matchName() {
+    if (hasMatched) {
+        showResult('只匹配一次同伴');
+        return;
+    }
+    
+    var input = document.getElementById('inputName').value.trim();
+    var result;
+    
+    result = getRandomResult([
+        '在前三棵树中，夏渝在一次收获中的苹果数量为6、7、7时离开，而将在下一棵树一次收获6个苹果时离开。',
+        '在前三棵树中，张奕阗在一次收获中的苹果数量为7、6、6时离开，而将在下一棵树一次收获7个苹果时离开。',
+        '在前三棵树中，廖爻垚在一次收获中的苹果数量为7、6、6时离开，而将在下一棵树一次收获7个苹果时离开。',
+        '在前三棵树中，程义嘉在一次收获中的苹果数量为7、6、7时离开，而将在下一棵树一次收获6个苹果时离开。'
+    ]);
+
+    document.getElementById('inputName').value = ''; // Clear input field
+    document.getElementById('result').style.display = 'none'; // Hide previous result
+    document.getElementById('loading').style.display = 'block'; // Show loading message
+
+    setTimeout(function() {
+        showResult(result);
+        hasMatched = true; // Set flag to indicate the matching has been done
+    }, 5000); // Show result after 5 seconds
+}
+</script>
+</body>
+</html>
